@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philos.h                                           :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/02/24 12:21:14 by tamehri          ###   ########.fr       */
+/*   Created: 2024/02/24 12:16:28 by tamehri           #+#    #+#             */
+/*   Updated: 2024/02/24 12:17:25 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOS_H
-# define PHILOS_H
+#include "../srcs/philos.h"
 
-# include "struct.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <pthread.h>
-
-/* FUNCTIONS */
-int		ft_atoi(const char *str);
-int 	parsing(t_philos *table, char **av);
-int	    quit(char *s);
-void	putendl_fd(char *s, int fd);
-
-#endif
+int	quit(char *s)
+{
+	if (s)
+		putendl_fd(s, 2);
+	return (-1);
+}

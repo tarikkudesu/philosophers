@@ -1,4 +1,9 @@
-SRC			=	mand/srcs/philos.c mand/help/putstr.c mand/pars/parss.c
+SRC			=	$(addprefix mand/, \
+				srcs/philos.c \
+				help/put_it.c \
+				help/atoint.c \
+				help/errors.c \
+				pars/parsin.c)
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'
