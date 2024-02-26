@@ -12,13 +12,15 @@
 
 #include "../srcs/philos.h"
 
-int	parsing(t_philos *table, char **av)
+int	parsing(t_table *table, char **av)
 {
-	table->philos = ft_atoi(*(av + 0));
-	table->t_die = ft_atoi(*(av + 1));
-	table->t_eat = ft_atoi(*(av + 2));
-	table->t_sleep = ft_atoi(*(av + 3));
-	table->forks = table->philos;
+	table->philos_n = ft_atoi(*(av + 0));
+	table->t_die = ft_atoi(*(av + 1)) * 1e3;
+	table->t_eat = ft_atoi(*(av + 2)) * 1e3;
+	table->t_sleep = ft_atoi(*(av + 3)) * 1e3;
+	if (table->t_die < 60e3 || table->t_eat < 60e3 || table->t_sleep < 60e3)
+		return (quit(ERR_TIME));
+	table->forks_n = table->philos_n;
 	if (*(av + 4))
 	{
 		table->num_eat = ft_atoi(*(av + 4));
@@ -31,7 +33,7 @@ int	parsing(t_philos *table, char **av)
 		table->num_eat = -1;
 		table->stop = 0;
 	}
-	if (table->philos < 1 || table->philos > 200 || table->t_die < 0 \
+	if (table->philos_n < 1 || table->philos_n > 200 || table->t_die < 0 \
 		|| table->t_eat < 0 || table->t_sleep < 0)
 		return (quit(ERR_ARG_FORMAT));
 	return (0);

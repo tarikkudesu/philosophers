@@ -3,6 +3,7 @@ philo
 test.c
 .DS_Store
 .vscode
+a.out
 
 # Prerequisites
 *.d

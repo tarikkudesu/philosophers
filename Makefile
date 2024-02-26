@@ -3,7 +3,8 @@ SRC			=	$(addprefix mand/, \
 				help/put_it.c \
 				help/atoint.c \
 				help/errors.c \
-				pars/parsin.c)
+				pars/parsin.c \
+				srcs/initdata.c)
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'
@@ -11,7 +12,7 @@ CC			=	cc
 NAME		=	philo
 HEADER		=	mand/srcs/philos.h mand/srcs/struct.h
 OBJ			=	$(SRC:.c=.o)
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g
 
 all: $(NAME) clean
 
