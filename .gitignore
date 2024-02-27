@@ -4,6 +4,9 @@ test.c
 .DS_Store
 .vscode
 a.out
+gnl.c
+print.c
+
 
 # Prerequisites
 *.d

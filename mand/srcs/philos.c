@@ -41,6 +41,8 @@ int	main(int ac, char **av)
 	if (-1 == parsing(&table, av + 1))
 		return (quit(NULL));
 	print_arg(&table);
-	init_data(&table);
+	if (init_data(&table))
+		return (1);
+	dinner_served(table);
 	print_philos(&table);
 }
