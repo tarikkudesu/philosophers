@@ -46,7 +46,7 @@ int	init_mutex(t_table *table)
 	i = -1;
 	while (++i < table->forks_n)
 	{
-		printf("fork %3d was put on the table\n", i + 1);
+		// printf("fork %3d was put on the table\n", i + 1);
 		if (-1 == pthread_mutex_init(&table->forks[i].fork, NULL))
 			return (quit(ERR_MUTEX_INIT));
 		table->forks[i].fork_id = i + 1;

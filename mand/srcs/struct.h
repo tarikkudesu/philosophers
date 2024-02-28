@@ -13,14 +13,17 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define ERR_ARG_NUM	"\033[31mError : wrong number of arguments\033[0m"
-# define ERR_ARG_FORMAT	"\033[31mError : argument format\033[0m"
-# define ERR_TIME		"\033[31mError : time should be more 60ms\033[0m"
-# define ERR_MAL		"\033[31mError : malloc\033[0m"
-# define ERR_MUTEX_INIT	"\033[31mError : pthread_mutex_init\033[0m"
-# define G				"\033[32m"
-# define R				"\033[31m"
-# define N				"\033[0m"
+
+# define ERR_THREAD_CREATE	"\033[31mError : pthread create\033[0m"
+
+# define ERR_ARG_NUM		"\033[31mError : wrong number of arguments\033[0m"
+# define ERR_ARG_FORMAT		"\033[31mError : argument format\033[0m"
+# define ERR_TIME			"\033[31mError : time should be more 60ms\033[0m"
+# define ERR_MAL			"\033[31mError : malloc\033[0m"
+# define ERR_MUTEX_INIT		"\033[31mError : pthread_mutex_init\033[0m"
+# define G					"\033[32m"
+# define R					"\033[31m"
+# define N					"\033[0m"
 
 # include <stdio.h>
 # include <unistd.h>

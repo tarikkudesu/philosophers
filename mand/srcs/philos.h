@@ -22,6 +22,7 @@
 # include <sys/time.h>
 
 /* FUNCTIONS */
+int     dinner_served(t_table *table);
 void	assign_forks(t_philos *philos, t_table *table, int i);
 int		init_philos(t_table *table);
 int		init_mutex(t_table *table);
