@@ -12,6 +12,23 @@
 
 #include "philos.h"
 
+void	mutex_read_and_write(pthread_mutex_t *mutex, long *var, long value)
+{
+	pthread_mutex_lock(mutex);
+	*var = value;
+	pthread_mutex_unlock(mutex);
+}
+
+long	mutex_read(pthread_mutex_t *mutex, long *var)
+{
+	long	value;
+
+	pthread_mutex_lock(mutex);
+	value = *var;
+	pthread_mutex_unlock(mutex);
+	return (value);
+}
+
 void	print_arg(t_table *table)
 {
 	printf("\033[33mnumber_of_philosophers\t\t\t\t%ld\n", table->philos_n);
@@ -19,16 +36,17 @@ void	print_arg(t_table *table)
 	printf("time_to_die\t\t\t\t\t%ld micro seconds\n", table->t_die);
 	printf("time_to_eat\t\t\t\t\t%ld micro seconds\n", table->t_eat);
 	printf("time_to_sleep\t\t\t\t\t%ld micro seconds\n", table->t_sleep);
-	printf("number_of_times_each_philosopher_must_eat\t%d\n", table->num_eat);
+	printf("number_of_times_each_philosopher_must_eat\t%ld\n", table->num_eat);
 }
 
 void	print_philos(t_table *table)
 {
+	printf("\n\n");
 	t_philos *philos;
-	for (int i = 0; i < table->philos_n; i++) {
+	for (long i = 0; i < table->philos_n; i++) {
 		philos = table->philos + i;
 		printf("philospher %3d, (right : %3d, left : %3d)\n", philos->tid, philos->right_fork->fork_id, philos->left_fork->fork_id);
-		printf("\tmeals_eaten %ld, fall : %d\n", philos->meals_eaten, philos->full);
+		printf("\tmeals_eaten %ld, full : %d\n", philos->meals_eaten, philos->full);
 	}
 }
 
@@ -43,6 +61,6 @@ int	main(int ac, char **av)
 	// print_arg(&table);
 	if (init_data(&table))
 		return (1);
-	dinner_served(&table);
 	// print_philos(&table);
+	dinner_served(&table);
 }

@@ -46,10 +46,13 @@ int	init_mutex(t_table *table)
 	i = -1;
 	while (++i < table->forks_n)
 	{
-		// printf("fork %3d was put on the table\n", i + 1);
-		if (-1 == pthread_mutex_init(&table->forks[i].fork, NULL))
+		if (-1 == pthread_mutex_init(&table->forks[i].fork_m, NULL))
 			return (quit(ERR_MUTEX_INIT));
 		table->forks[i].fork_id = i + 1;
+		if (-1 == pthread_mutex_init(&table->forks[i].fork_m, NULL))
+			return (quit(ERR_MUTEX_INIT));
+	if (-1 == pthread_mutex_init(&table->print_m, NULL))
+		return (quit(ERR_MUTEX_INIT));
 	}
 	return (0);
 }
@@ -61,8 +64,9 @@ int	init_data(t_table *table)
 		return (quit(ERR_MAL));
 	table->forks = malloc(sizeof(t_fork) * table->forks_n);
 	if (!table->philos)
-		return (quit(ERR_MAL));
-	init_mutex(table);
+		return (free(table->philos), quit(ERR_MAL));
+	if (-1 == init_mutex(table))
+		return (free(table->forks), free(table->philos), -1);
 	init_philos(table);
 	return (0);
 }

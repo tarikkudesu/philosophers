@@ -4,6 +4,7 @@ SRC			=	$(addprefix mand/, \
 				help/put_it.c \
 				help/atoint.c \
 				help/errors.c \
+				help/usleep.c \
 				pars/parsin.c \
 				srcs/initdata.c)
 

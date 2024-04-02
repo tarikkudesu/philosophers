@@ -22,15 +22,17 @@
 # include <sys/time.h>
 
 /* FUNCTIONS */
-int     dinner_served(t_table *table);
+size_t  get_current_time();
+void    ft_usleep(size_t micro);
 void	assign_forks(t_philos *philos, t_table *table, int i);
+int     dinner_served(t_table *table);
 int		init_philos(t_table *table);
 int		init_mutex(t_table *table);
 int		init_data(t_table *table);
 
-int		ft_atoi(const char *str);
 int 	parsing(t_table *table, char **av);
-int	    quit(char *s);
 void	putendl_fd(char *s, int fd);
+int		ft_atoi(const char *str);
+int	    quit(char *s);
 
 #endif

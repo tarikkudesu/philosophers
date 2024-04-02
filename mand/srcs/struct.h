@@ -13,17 +13,20 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-
-# define ERR_THREAD_CREATE	"\033[31mError : pthread create\033[0m"
-
 # define ERR_ARG_NUM		"\033[31mError : wrong number of arguments\033[0m"
-# define ERR_ARG_FORMAT		"\033[31mError : argument format\033[0m"
 # define ERR_TIME			"\033[31mError : time should be more 60ms\033[0m"
-# define ERR_MAL			"\033[31mError : malloc\033[0m"
 # define ERR_MUTEX_INIT		"\033[31mError : pthread_mutex_init\033[0m"
+# define ERR_ARG_FORMAT		"\033[31mError : argument format\033[0m"
+# define ERR_THREAD_CREATE	"\033[31mError : pthread create\033[0m"
+# define ERR_MAL			"\033[31mError : malloc\033[0m"
 # define G					"\033[32m"
 # define R					"\033[31m"
 # define N					"\033[0m"
+# define ST_DIED			"died"
+# define ST_EAT				"is eating"
+# define ST_SLEEP			"is sleeping"
+# define ST_THINK			"is thinking"
+# define ST_FORK			"has taken a fork"
 
 # include <stdio.h>
 # include <unistd.h>
@@ -36,38 +39,38 @@ typedef struct s_philos	t_philos;
 typedef struct s_table	t_table;
 typedef struct s_fork	t_fork;
 
-struct s_fork
-{
-	pthread_mutex_t	fork;
-	int				fork_id;
-};
-
-
-struct s_philos
-{
-	int			tid;
-	long		meals_eaten;
-	bool		full;
-	int			last_meal_time;
-	t_fork		*right_fork;
-	t_fork		*left_fork;
-	t_table		*table;
-	pthread_t	thread_id;
-};
-
 struct s_table
 {
 	long		t_die;
 	long		t_eat;
 	long		t_sleep;
-	int			num_eat;
-	int			stop;
-	int			simulation_start_time;
-	int			end_simulation;
-	t_philos	*philos;
-	t_fork		*forks;
 	long		philos_n;
 	long		forks_n;
+	long		num_eat;
+	long		simulation_start_time;
+	bool			end_simulation;
+	bool			stop;
+	t_fork			*forks;
+	t_philos		*philos;
+	pthread_mutex_t	print_m;
+};
+
+struct s_philos
+{
+	int			tid;
+	bool		full;
+	pthread_t	thread_id;
+	long		last_meal_time;
+	long		meals_eaten;
+	t_fork		*right_fork;
+	t_fork		*left_fork;
+	t_table		*table;
+};
+
+struct s_fork
+{
+	pthread_mutex_t	fork_m;
+	int				fork_id;
 };
 
 #endif
