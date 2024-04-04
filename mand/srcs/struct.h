@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/04 15:06:43 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:31:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct s_table
 	long			simulation_start_time;
 	bool			end_simulation;
 	bool			ready;
+	bool			dead;
 	t_fork			*forks;
 	t_philos		*philos;
 	pthread_mutex_t	print_m;
@@ -61,9 +62,9 @@ struct s_table
 struct s_philos
 {
 	int				tid;
-	bool			out;
+	bool			all_out;
+	bool			all_in;
 	bool			full;
-	bool			dead;
 	long			last_meal_time;
 	long			meals_eaten;
 	t_fork			*right_fork;

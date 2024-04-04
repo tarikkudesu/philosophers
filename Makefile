@@ -6,7 +6,9 @@ SRC			=	$(addprefix mand/, \
 				help/errors.c \
 				help/usleep.c \
 				pars/parsin.c \
-				srcs/initia.c)
+				srcs/initia.c \
+				srcs/monitor.c \
+				srcs/mutex.c)
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'

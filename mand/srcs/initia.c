@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/04 15:10:12 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:36:29 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void	assign_forks(t_philos *philos, t_table *table, int i)
+static void	assign_forks(t_philos *philos, t_table *table, int i)
 {
 	philos->left_fork = table->forks + i;
 	if (i == table->philos_n - 1)
@@ -21,7 +21,7 @@ void	assign_forks(t_philos *philos, t_table *table, int i)
 		philos->right_fork = table->forks + i + 1;
 }
 
-int	init_philos(t_table *table)
+static int	init_philos(t_table *table)
 {
 	int			i;
 	t_philos	*philos;
@@ -34,14 +34,13 @@ int	init_philos(t_table *table)
 		philos->tid = i + 1;
 		philos->meals_eaten = 0;
 		philos->full = false;
-		philos->dead = false;
-		philos->out = false;
+		philos->all_out = false;
 		assign_forks(philos, table, i);
 	}
 	return (0);
 }
 
-int	init_mutex(t_table *table)
+static int	init_mutex(t_table *table)
 {
 	int	i;
 
@@ -61,7 +60,7 @@ int	init_mutex(t_table *table)
 	return (0);
 }
 
-int	init_data(t_table *table)
+int	fill_table(t_table *table)
 {
 	table->ready = false;
 	table->end_simulation = false;
