@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/02/26 17:59:51 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/04 12:50:51 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@
 # include <sys/time.h>
 
 /* FUNCTIONS */
-size_t  get_current_time();
-void    ft_usleep(size_t micro);
-void	assign_forks(t_philos *philos, t_table *table, int i);
-int     dinner_served(t_table *table);
-int		init_philos(t_table *table);
-int		init_mutex(t_table *table);
-int		init_data(t_table *table);
+bool		b_mutex_read(pthread_mutex_t *mutex, bool *var);
+long		l_mutex_read(pthread_mutex_t *mutex, long *var);
+void		b_mutex_read_and_write(pthread_mutex_t *mutex, bool *var, bool value);
+void		l_mutex_read_and_write(pthread_mutex_t *mutex, long *var, long value);
+size_t		get_current_time();
+void		ft_usleep(size_t micro);
+void		assign_forks(t_philos *philos, t_table *table, int i);
+int 		dinner_served(t_table *table);
+int			init_philos(t_table *table);
+int			init_mutex(t_table *table);
+int			init_data(t_table *table);
 
-int 	parsing(t_table *table, char **av);
-void	putendl_fd(char *s, int fd);
-int		ft_atoi(const char *str);
-int	    quit(char *s);
+int			parsing(t_table *table, char **av);
+void		putendl_fd(char *s, int fd);
+int			ft_atoi(const char *str);
+int			quit(char *s);
 
 #endif

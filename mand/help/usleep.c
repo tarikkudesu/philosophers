@@ -16,8 +16,8 @@ void    ft_usleep(size_t micro)
 	start_time = get_current_time();
 	while (1)
 	{
-		if (get_current_time() - start_time > micro)
+		if (get_current_time() - start_time >= micro)
 			break ;
-		usleep(1);
+		usleep(50);
 	}
 }

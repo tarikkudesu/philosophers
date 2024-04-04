@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/02/24 12:29:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:06:43 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # define ERR_ARG_NUM		"\033[31mError : wrong number of arguments\033[0m"
 # define ERR_TIME			"\033[31mError : time should be more 60ms\033[0m"
+# define ERR_MUTEX_DESTROY	"\033[31mError : pthread_mutex_destroy\033[0m"
 # define ERR_MUTEX_INIT		"\033[31mError : pthread_mutex_init\033[0m"
 # define ERR_ARG_FORMAT		"\033[31mError : argument format\033[0m"
 # define ERR_THREAD_CREATE	"\033[31mError : pthread create\033[0m"
+# define ERR_THREAD_JOIN	"\033[31mError : pthread_join\033[0m"
 # define ERR_MAL			"\033[31mError : malloc\033[0m"
 # define G					"\033[32m"
 # define R					"\033[31m"
@@ -41,30 +43,34 @@ typedef struct s_fork	t_fork;
 
 struct s_table
 {
-	long		t_die;
-	long		t_eat;
-	long		t_sleep;
-	long		philos_n;
-	long		forks_n;
-	long		num_eat;
-	long		simulation_start_time;
+	long			t_die;
+	long			t_eat;
+	long			t_sleep;
+	long			philos_n;
+	long			forks_n;
+	long			meals_number;
+	long			simulation_start_time;
 	bool			end_simulation;
-	bool			stop;
+	bool			ready;
 	t_fork			*forks;
 	t_philos		*philos;
 	pthread_mutex_t	print_m;
+	pthread_mutex_t	table_m;
 };
 
 struct s_philos
 {
-	int			tid;
-	bool		full;
-	pthread_t	thread_id;
-	long		last_meal_time;
-	long		meals_eaten;
-	t_fork		*right_fork;
-	t_fork		*left_fork;
-	t_table		*table;
+	int				tid;
+	bool			out;
+	bool			full;
+	bool			dead;
+	long			last_meal_time;
+	long			meals_eaten;
+	t_fork			*right_fork;
+	t_fork			*left_fork;
+	t_table			*table;
+	pthread_t		thread_id;
+	pthread_mutex_t	philo_m;
 };
 
 struct s_fork
