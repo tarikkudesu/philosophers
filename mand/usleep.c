@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:42 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/07 13:56:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:29:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../srcs/philos.h"
+#include "philos.h"
 
-long	get_current_time()
+long	get_current_time(void)
 {
 	struct timeval	tv;
 

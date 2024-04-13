@@ -1,14 +1,14 @@
-SRC			=	$(addprefix mand/, \
-				srcs/philos.c \
-				srcs/dinner.c \
-				help/put_it.c \
-				help/atoint.c \
-				help/errors.c \
-				help/usleep.c \
-				pars/parsin.c \
-				srcs/initia.c \
-				srcs/monitor.c \
-				srcs/mutex.c)
+SRC			=	philos.c \
+				dinner.c \
+				put_it.c \
+				atoint.c \
+				errors.c \
+				usleep.c \
+				parsin.c \
+				initia.c \
+				single.c \
+				monitor.c \
+				utilss.c
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'
@@ -24,7 +24,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo $(GREEN) "\n compilation done" $(NONE)
 
-%.o: %.c mand/srcs/philos.h mand/srcs/struct.h
+%.o: %.c philos.h struct.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo $(GREEN) "... Compiling\t$<\t[OK]" $(RESET)
 

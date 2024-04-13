@@ -6,11 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:29:36 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/07 13:37:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:29:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../srcs/philos.h"
+#include "philos.h"
 
 int	parsing(t_table *table, char **av)
 {

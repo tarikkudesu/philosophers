@@ -6,18 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:16:28 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/07 13:41:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:30:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../srcs/philos.h"
-
-// int	quit(char *s)
-// {
-// 	if (s)
-// 		putendl_fd(s, 2);
-// 	return (-1);
-// }
+#include "philos.h"
 
 int	quit(t_errors _error_type)
 {

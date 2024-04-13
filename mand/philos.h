@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 10:17:43 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:29:45 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,24 @@
 
 # include <fcntl.h>
 
-long		get_current_time();
+long		get_current_time(void);
 void		ft_usleep(t_philos *philo, long micro);
-int 		fill_table(t_table *table);
-int 		dinner_served(t_table *table);
+int			fill_table(t_table *table);
+int			dinner_served(t_table *table);
 
 int			parsing(t_table *table, char **av);
 void		putendl_fd(char *s, int fd);
 int			ft_atoi(const char *str);
 
-/* FUNCTIONS */
-void		*monitor(void *param);
+void		*have_dinner(void *param);
+void		monitor(t_table *table);
+int			single_philo(t_table *table);
 int			quit(t_errors _error_type);
 bool		simu_ended(t_table *table);
-void		print_status(t_philos *philo, t_status status, int f, int id);
-void	    wl_mutex(pthread_mutex_t *mutex, long *var, long value);
-void	    wb_mutex(pthread_mutex_t *mutex, bool *var, bool value);
-long	    rl_mutex(pthread_mutex_t *mutex, long *var);
-bool	    rb_mutex(pthread_mutex_t *mutex, bool *var);
+void		print_status(t_philos *philo, t_status status);
+void		wl_mutex(pthread_mutex_t *mutex, long *var, long value);
+void		wb_mutex(pthread_mutex_t *mutex, bool *var, bool value);
+long		rl_mutex(pthread_mutex_t *mutex, long *var);
+bool		rb_mutex(pthread_mutex_t *mutex, bool *var);
 
 #endif

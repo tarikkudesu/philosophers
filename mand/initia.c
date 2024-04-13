@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 10:03:43 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:30:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	assign_forks(t_philos *philo, int i)
 
 static void	init_philos(t_table *table)
 {
-	int			i;
+	long		i;
 	t_philos	*philos;
 
 	i = -1;
@@ -42,7 +42,7 @@ static void	init_philos(t_table *table)
 
 static int	init_mutex(t_table *table)
 {
-	int	i;
+	long	i;
 
 	i = -1;
 	if (0 != pthread_mutex_init(&table->print_m, NULL))
@@ -66,8 +66,16 @@ int	fill_table(t_table *table)
 	table->ready = false;
 	table->end_simu = false;
 	table->start_monitor = 0;
+	table->philos = NULL;
+	table->forks = NULL;
+	table->philos = malloc(sizeof(t_philos) * table->philos_n);
+	if (!table->philos)
+		return (quit(ERROR_MAL));
+	table->forks = malloc(sizeof(t_fork) * table->forks_n);
+	if (!table->philos)
+		return (free(table->philos), quit(ERROR_MAL));
 	if (-1 == init_mutex(table))
-		return (free(table->forks), free(table->philos), -1);
+		return (-1);
 	init_philos(table);
 	return (0);
 }

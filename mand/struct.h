@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/12 16:16:59 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:29:35 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@
 # include <stdbool.h>
 # include <pthread.h>
 
-typedef int				iter;
 typedef struct s_philos	t_philos;
 typedef struct s_table	t_table;
 typedef struct s_fork	t_fork;
 typedef enum e_status	t_status;
 typedef enum e_errors	t_errors;
-
 
 struct s_philos
 {
@@ -62,8 +60,8 @@ struct s_table
 	bool			end_simu;
 	bool			ready;
 	bool			dead;
-	t_fork			forks[200];
-	t_philos		philos[200];
+	t_fork			*forks;
+	t_philos		*philos;
 	pthread_mutex_t	print_m;
 	pthread_mutex_t	table_m;
 };
