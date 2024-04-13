@@ -6,51 +6,56 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:26 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/04 18:29:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 10:19:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void	print_status_d(t_philos *philo, char *status, long time, long i)
+bool	simu_ended(t_table *table)
 {
-	long	time_stamp;
-
-	pthread_mutex_lock(&philo->table->print_m);
-	time_stamp = time - l_mutex_read(&philo->table->table_m, \
-		&philo->table->simulation_start_time);
-	printf("%ld\t%d\t%s .  %ld\n", time_stamp, philo->tid, status, i);
-	pthread_mutex_unlock(&philo->table->print_m);
+	return (rb_mutex(&table->table_m, &table->end_simu));
 }
 
-void	print_status(t_philos *philo, char *status, long time)
+void	print_status(t_philos *philo, t_status status, int f, int fd)
 {
 	long	time_stamp;
 
-	if (b_mutex_read(&philo->table->table_m, &philo->table->end_simulation) == true)
+	if (philo->full)
 		return ;
+	time_stamp = get_current_time() - rl_mutex(&philo->table->table_m, \
+		&philo->table->simu_start_time);
 	pthread_mutex_lock(&philo->table->print_m);
-	time_stamp = time - l_mutex_read(&philo->table->table_m, \
-		&philo->table->simulation_start_time);
-	printf("%ld\t%d\t%s\n", time_stamp, philo->tid, status);
+	if (status == DIED)
+		printf("%ld\t%d\t%s\n", time_stamp, philo->tid, "died");
+	else if (status == FORK && simu_ended(philo->table) == false && f == 1)
+		printf("%ld\t%d\t%s : %d\n", time_stamp, philo->tid, "has taken a left fork", fd);
+	else if (status == FORK && simu_ended(philo->table) == false)
+		printf("%ld\t%d\t%s : %d\n", time_stamp, philo->tid, "has taken a right fork", fd);
+	else if (status == EATING && simu_ended(philo->table) == false)
+		printf("%ld\t%d\t%s\n", time_stamp, philo->tid, "is eating");
+	else if (status == SLEEPING && simu_ended(philo->table) == false)
+		printf("%ld\t%d\t%s\n", time_stamp, philo->tid, "is sleeping");
+	else if (status == THINKING && simu_ended(philo->table) == false)
+		printf("%ld\t%d\t%s\n", time_stamp, philo->tid, "is thinking");
 	pthread_mutex_unlock(&philo->table->print_m);
 }
 
-void	l_mutex_read_and_write(pthread_mutex_t *mutex, long *var, long value)
+void	wl_mutex(pthread_mutex_t *mutex, long *var, long value)
 {
 	pthread_mutex_lock(mutex);
 	*var = value;
 	pthread_mutex_unlock(mutex);
 }
 
-void	b_mutex_read_and_write(pthread_mutex_t *mutex, bool *var, bool value)
+void	wb_mutex(pthread_mutex_t *mutex, bool *var, bool value)
 {
 	pthread_mutex_lock(mutex);
 	*var = value;
 	pthread_mutex_unlock(mutex);
 }
 
-long	l_mutex_read(pthread_mutex_t *mutex, long *var)
+long	rl_mutex(pthread_mutex_t *mutex, long *var)
 {
 	long	value;
 
@@ -60,7 +65,7 @@ long	l_mutex_read(pthread_mutex_t *mutex, long *var)
 	return (value);
 }
 
-bool	b_mutex_read(pthread_mutex_t *mutex, bool *var)
+bool	rb_mutex(pthread_mutex_t *mutex, bool *var)
 {
 	bool	value;
 

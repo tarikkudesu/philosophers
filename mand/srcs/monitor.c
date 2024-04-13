@@ -6,61 +6,56 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:04:04 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/04 18:38:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/13 10:18:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-int	all_started_execution(t_table *table)
+static void	all_started_execution(t_table *table)
 {
-	long	i;
-
+	long tmp;
 	while (1)
 	{
-		i = 0;
-		while (b_mutex_read(&table->philos[i].philo_m, \
-			&table->philos[i].all_in) == true && i < table->philos_n)
-			i++;
-		if (i == table->philos_n)
+		tmp = rl_mutex(&table->table_m, &table->start_monitor);
+		if (tmp == table->philos_n)
 			break ;
 	}
-	return (1);
+}
+
+static bool	philo_died(t_philos *philo)
+{
+	long	elapsed;
+	long	t_die;
+
+	if (rb_mutex(&philo->philo_m, &philo->full) == true)
+		return (false);
+	elapsed = get_current_time() - rl_mutex(&philo->philo_m, &philo->last_eaten);
+	t_die = philo->table->t_die;
+	if (elapsed > t_die)
+		return (true);	
+	return (false);
 }
 
 void	*monitor(void *param)
 {
-	long	meals_number;
 	t_table	*table;
-	long	i;
+	iter	i;
 
 	table = (t_table *)param;
 	all_started_execution(table);
-	while (b_mutex_read(&table->table_m, &table->end_simulation) == false)
+	while (rb_mutex(&table->table_m, &table->end_simu) == false)
 	{
 		i = -1;
-		while (++i < table->philos_n)
+		while (++i < table->philos_n && rb_mutex(&table->table_m, &table->end_simu) == false)
 		{
-			long	time;
-		
-			time = l_mutex_read(&table->philos->philo_m, &table->philos[i].last_meal_time);
-			if (get_current_time() - time > table->t_die)
+			if (philo_died(table->philos + i))
 			{
-				// time = l_mutex_read(&table->philos->philo_m, &table->philos[i].last_meal_time);
-				b_mutex_read_and_write(&table->table_m, &table->end_simulation, true);
-				print_status_d(&table->philos[i], ST_DIED, get_current_time(), get_current_time() - time);
-				break;
+				wb_mutex(&table->table_m, &table->end_simu, true);
+				print_status(table->philos + i, DIED, 0, 0);
 			}
-		}
-		meals_number = l_mutex_read(&table->table_m, &table->meals_number);
-		if (meals_number != -1)
-		{
-			i = -1;
-			while (++i < table->philos_n)
-				if (l_mutex_read(&table->philos[i].philo_m, &table->philos[i].meals_eaten) != meals_number)
-					break ;
-			if (i == table->philos_n)
-				b_mutex_read_and_write(&table->table_m, &table->end_simulation, true);
+			// if (rl_mutex(&table->table_m, &table->start_monitor) == 0)
+			// 	wb_mutex(&table->table_m, &table->end_simu, true);
 		}
 	}
 	return (NULL);

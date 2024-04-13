@@ -6,29 +6,12 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/04 18:31:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:16:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
-
-# define ERR_ARG_NUM		"\033[31mError : wrong number of arguments\033[0m"
-# define ERR_TIME			"\033[31mError : time should be more 60ms\033[0m"
-# define ERR_MUTEX_DESTROY	"\033[31mError : pthread_mutex_destroy\033[0m"
-# define ERR_MUTEX_INIT		"\033[31mError : pthread_mutex_init\033[0m"
-# define ERR_ARG_FORMAT		"\033[31mError : argument format\033[0m"
-# define ERR_THREAD_CREATE	"\033[31mError : pthread create\033[0m"
-# define ERR_THREAD_JOIN	"\033[31mError : pthread_join\033[0m"
-# define ERR_MAL			"\033[31mError : malloc\033[0m"
-# define G					"\033[32m"
-# define R					"\033[31m"
-# define N					"\033[0m"
-# define ST_DIED			"died"
-# define ST_EAT				"is eating"
-# define ST_SLEEP			"is sleeping"
-# define ST_THINK			"is thinking"
-# define ST_FORK			"has taken a fork"
 
 # include <stdio.h>
 # include <unistd.h>
@@ -37,35 +20,21 @@
 # include <stdbool.h>
 # include <pthread.h>
 
+typedef int				iter;
 typedef struct s_philos	t_philos;
 typedef struct s_table	t_table;
 typedef struct s_fork	t_fork;
+typedef enum e_status	t_status;
+typedef enum e_errors	t_errors;
 
-struct s_table
-{
-	long			t_die;
-	long			t_eat;
-	long			t_sleep;
-	long			philos_n;
-	long			forks_n;
-	long			meals_number;
-	long			simulation_start_time;
-	bool			end_simulation;
-	bool			ready;
-	bool			dead;
-	t_fork			*forks;
-	t_philos		*philos;
-	pthread_mutex_t	print_m;
-	pthread_mutex_t	table_m;
-};
 
 struct s_philos
 {
 	int				tid;
-	bool			all_out;
-	bool			all_in;
+	bool			out;
+	bool			in;
 	bool			full;
-	long			last_meal_time;
+	long			last_eaten;
 	long			meals_eaten;
 	t_fork			*right_fork;
 	t_fork			*left_fork;
@@ -78,6 +47,48 @@ struct s_fork
 {
 	pthread_mutex_t	fork_m;
 	int				fork_id;
+};
+
+struct s_table
+{
+	long			t_die;
+	long			t_eat;
+	long			t_sleep;
+	long			philos_n;
+	long			forks_n;
+	long			meals_nbr;
+	long			simu_start_time;
+	long			start_monitor;
+	bool			end_simu;
+	bool			ready;
+	bool			dead;
+	t_fork			forks[200];
+	t_philos		philos[200];
+	pthread_mutex_t	print_m;
+	pthread_mutex_t	table_m;
+};
+
+enum e_status
+{
+	DIED,
+	FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+};
+
+enum e_errors
+{
+	ERR_DEF,
+	ERROR_MAL,
+	ERROR_ARGS,
+	ERROR_TIME,
+	ERROR_FORMAT,
+	PTHREAD_JOIN,
+	PTHREAD_CREATE,
+	PTHREAD_DETACH,
+	PTHREAD_MUTEX_INIT,
+	PTHREAD_MUTEX_DESTROY,
 };
 
 #endif
