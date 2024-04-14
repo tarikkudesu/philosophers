@@ -41,7 +41,6 @@ static bool	philo_died(t_philos *philo)
 
 void	monitor(t_table *table)
 {
-	long	time_stamp;
 	long	i;
 
 	all_started_execution(table);
@@ -54,8 +53,6 @@ void	monitor(t_table *table)
 			if (philo_died(table->philos + i))
 			{
 				wb_mutex(&table->table_m, &table->end_simu, true);
-				time_stamp = get_current_time() - rl_mutex(&table->table_m, \
-				&table->simu_start_time);
 				print_status(table->philos + i, DIED);
 			}
 			if (rl_mutex(&table->table_m, &table->start_monitor) == 0)
