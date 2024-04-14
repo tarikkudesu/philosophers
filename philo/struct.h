@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:29:35 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:42:09 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef enum e_errors	t_errors;
 struct s_philos
 {
 	int				tid;
-	bool			out;
-	bool			in;
 	bool			full;
 	long			last_eaten;
 	long			meals_eaten;
@@ -44,7 +42,6 @@ struct s_philos
 struct s_fork
 {
 	pthread_mutex_t	fork_m;
-	int				fork_id;
 };
 
 struct s_table
@@ -53,13 +50,11 @@ struct s_table
 	long			t_eat;
 	long			t_sleep;
 	long			philos_n;
-	long			forks_n;
 	long			meals_nbr;
 	long			simu_start_time;
 	long			start_monitor;
 	bool			end_simu;
 	bool			ready;
-	bool			dead;
 	t_fork			*forks;
 	t_philos		*philos;
 	pthread_mutex_t	print_m;

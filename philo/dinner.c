@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:50:55 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:32:34 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	synchronize(t_philos *philo)
 	philo->table->start_monitor++;
 	pthread_mutex_unlock(&philo->table->table_m);
 	if (philo->tid % 2)
-		ft_usleep(philo, philo->table->t_eat / 2);
+		ft_usleep(philo, philo->table->t_eat);
 }
 
 void	eating(t_philos *philo)
 {
+	t_table	*table;
+
+	table = philo->table;
 	pthread_mutex_lock(&philo->left_fork->fork_m);
 	print_status(philo, FORK);
 	pthread_mutex_lock(&philo->right_fork->fork_m);
@@ -60,29 +63,34 @@ void	eating(t_philos *philo)
 	ft_usleep(philo, philo->table->t_eat);
 	if (philo->table->meals_nbr > 0 \
 		&& philo->meals_eaten == philo->table->meals_nbr)
-		wb_mutex(&philo->philo_m, &philo->full, true);
+		philo->full = true;
 	pthread_mutex_unlock(&philo->left_fork->fork_m);
 	pthread_mutex_unlock(&philo->right_fork->fork_m);
 }
 
 void	*have_dinner(void *param)
 {
+	long		time_stamp;
 	t_philos	*philo;
+	t_table		*table;
 
 	philo = (t_philos *)param;
+	table = philo->table;
 	synchronize(philo);
-	while (simu_ended(philo->table) == false)
+	while (simu_ended(table) == false)
 	{
 		if (philo->full)
 		{
-			pthread_mutex_lock(&philo->table->table_m);
+			pthread_mutex_lock(&table->table_m);
 			philo->table->start_monitor--;
-			pthread_mutex_unlock(&philo->table->table_m);
+			pthread_mutex_unlock(&table->table_m);
 			break ;
 		}
 		eating(philo);
+		time_stamp = get_current_time() - table->simu_start_time;
 		print_status(philo, SLEEPING);
-		ft_usleep(philo, philo->table->t_sleep);
+		ft_usleep(philo, table->t_sleep);
+		time_stamp = get_current_time() - table->simu_start_time;
 		print_status(philo, THINKING);
 	}
 	return (NULL);

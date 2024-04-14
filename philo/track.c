@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   track.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:04:04 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:29:58 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:40:48 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,22 @@ static void	all_started_execution(t_table *table)
 
 static bool	philo_died(t_philos *philo)
 {
-	long	elapsed;
+	long	passed;
 	long	t_die;
 
 	if (rb_mutex(&philo->philo_m, &philo->full) == true)
 		return (false);
-	elapsed = get_current_time() - rl_mutex(&philo->philo_m, \
+	passed = get_current_time() - rl_mutex(&philo->philo_m, \
 		&philo->last_eaten);
 	t_die = philo->table->t_die;
-	if (elapsed > t_die)
+	if (passed > t_die)
 		return (true);
 	return (false);
 }
 
 void	monitor(t_table *table)
 {
+	long	time_stamp;
 	long	i;
 
 	all_started_execution(table);
@@ -53,6 +54,8 @@ void	monitor(t_table *table)
 			if (philo_died(table->philos + i))
 			{
 				wb_mutex(&table->table_m, &table->end_simu, true);
+				time_stamp = get_current_time() - rl_mutex(&table->table_m, \
+				&table->simu_start_time);
 				print_status(table->philos + i, DIED);
 			}
 			if (rl_mutex(&table->table_m, &table->start_monitor) == 0)

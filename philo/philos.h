@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:29:45 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:32:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-# include <fcntl.h>
 
 long		get_current_time(void);
 void		ft_usleep(t_philos *philo, long micro);

@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_it.c                                           :+:      :+:    :+:   */
+/*   usleep.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 20:09:04 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:29:42 by tamehri          ###   ########.fr       */
+/*   Created: 2024/04/04 17:51:42 by tamehri           #+#    #+#             */
+/*   Updated: 2024/04/14 18:54:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void	putendl_fd(char *s, int fd)
+long	get_current_time(void)
 {
-	if (!s || fd < 0)
-		return ;
-	while (*s)
-		write(fd, s++, 1);
-	write(fd, "\n", 1);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	ft_usleep(t_philos *philo, long micro)
+{
+	long	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < micro && !simu_ended(philo->table))
+		usleep(1);
+	return ;
 }

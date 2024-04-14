@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsin.c                                           :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:29:36 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/13 15:29:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:42:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	parsing(t_table *table, char **av)
 		return (quit(ERROR_TIME));
 	if (table->philos_n < 1 || table->philos_n > 200)
 		return (quit(ERROR_FORMAT));
-	table->forks_n = table->philos_n;
 	if (*(av + 4))
 	{
 		table->meals_nbr = ft_atoi(*(av + 4));
