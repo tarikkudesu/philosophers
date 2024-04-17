@@ -35,17 +35,9 @@ struct s_philos
 	bool			full;
 	long			last_eaten;
 	long			meals_eaten;
-	t_fork			*right_fork;
-	t_fork			*left_fork;
 	t_table			*table;
 	pthread_t		thread_id;
 	sem_t			philo_s;
-};
-
-struct s_fork
-{
-	char	*name;
-	sem_t	*fork_s;
 };
 
 struct s_table
@@ -59,11 +51,11 @@ struct s_table
 	long			start_monitor;
 	bool			end_simu;
 	bool			ready;
-	t_fork			*forks;
+	sem_t			*fork_s;
 	t_philos		*philos;
 	sem_t			*print_s;
+	sem_t			*full;
 	sem_t			*death_s;
-	sem_t			*start_s;
 };
 
 enum e_status

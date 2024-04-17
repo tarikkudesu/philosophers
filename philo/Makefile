@@ -15,7 +15,7 @@ CC			=	cc
 NAME		=	philo
 HEADER		=	srcs/philos.h srcs/struct.h
 OBJ			=	$(SRC:.c=.o)
-CFLAGS		=	-Wall -Wextra -Werror -pthread
+CFLAGS		=	-Wall -Wextra -Werror -pthread -fsanitize=thread
 
 all: $(NAME)
 
