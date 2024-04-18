@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOS_H
-# define PHILOS_H
+#ifndef PHILOS_BONUS_H
+# define PHILOS_BONUS_H
 
 # include "struct_bonus.h"
 # include <stdio.h>
@@ -20,11 +20,13 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <signal.h>
 
 long		get_current_time(void);
 void		ft_usleep(t_philos *philo, long micro);
 int			fill_table(t_table *table);
 int			dinner_served(t_table *table);
+char		*ft_strjoin(char const *s1, char const *s2);
 
 int			parsing(t_table *table, char **av);
 void		putendl_fd(char *s, int fd);

@@ -19,6 +19,7 @@ long	get_current_time(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
+
 void	ft_usleep(t_philos *philo, long micro)
 {
 	long	start;

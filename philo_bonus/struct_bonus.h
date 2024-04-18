@@ -14,30 +14,30 @@
 # define STRUCT_H
 
 # include <stdio.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
 # include <pthread.h>
-
 # include <semaphore.h>
 
 typedef struct s_philos	t_philos;
 typedef struct s_table	t_table;
-typedef struct s_fork	t_fork;
 typedef enum e_status	t_status;
 typedef enum e_errors	t_errors;
 
 struct s_philos
 {
-	pid_t			pid;
 	int				philo_id;
-	bool			full;
+	pid_t			pid;
 	long			last_eaten;
+	bool			dead;
 	long			meals_eaten;
+	sem_t			*philo_s;
+	char			*sem_name;
 	t_table			*table;
 	pthread_t		thread_id;
-	sem_t			philo_s;
 };
 
 struct s_table
@@ -48,14 +48,11 @@ struct s_table
 	long			philos_n;
 	long			meals_nbr;
 	long			simu_start_time;
-	long			start_monitor;
-	bool			end_simu;
-	bool			ready;
+	sem_t			*end_simu_s;
+	sem_t			*full_s;
 	sem_t			*fork_s;
-	t_philos		*philos;
 	sem_t			*print_s;
-	sem_t			*full;
-	sem_t			*death_s;
+	t_philos		*philos;
 };
 
 enum e_status

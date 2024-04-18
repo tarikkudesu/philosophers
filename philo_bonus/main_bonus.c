@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/17 09:45:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:47:10 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (-1 == fill_table(&table))
 		return (1);
-	/* ft_usleep(table.philos, 200); */
 	dinner_served(&table);
 	/* clean_table(&table); */
 }

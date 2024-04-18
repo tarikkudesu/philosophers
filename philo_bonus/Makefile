@@ -14,9 +14,9 @@ NONE		=	'\033[0m'
 CC			=	cc
 NAME		=	philo_bonus
 OBJ			=	$(SRC:.c=.o)
-CFLAGS		=	-Wall -Wextra -Werror -pthread
+CFLAGS		=	-Wall -Wextra -Werror -pthread -fsanitize=thread
 
-all: $(NAME)
+all: $(NAME) clean
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
