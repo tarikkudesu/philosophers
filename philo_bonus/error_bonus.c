@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:16:28 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/15 10:03:10 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/20 11:01:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ void	putendl_fd(char *s, int fd)
 	while (*s)
 		write(fd, s++, 1);
 	write(fd, "\n", 1);
+}
+
+static int	quit_(t_errors _error_type)
+{
+	if (_error_type == SEM_OPEN)
+		putendl_fd("\033[31mError : sem_open\033[0m", 2);
+	else if (_error_type == SEM_POST)
+		putendl_fd("\033[31mError : sem_post\033[0m", 2);
+	else if (_error_type == SEM_WAIT)
+		putendl_fd("\033[31mError : sem_wait\033[0m", 2);
+	else if (_error_type == SEM_UNLINK)
+		putendl_fd("\033[31mError : sem_unlink\033[0m", 2);
+	else if (_error_type == SEM_CLOSE)
+		putendl_fd("\033[31mError : sem_close\033[0m", 2);
+	else if (_error_type == ERROR_FORK)
+		putendl_fd("\033[31mError : fork\033[0m", 2);
+	else if (_error_type == ERROR_WAIT)
+		putendl_fd("\033[31mError : waitpid\033[0m", 2);
+	else
+		return (-1);
+	return (-1);
 }
 
 int	quit(t_errors _error_type)
@@ -39,26 +60,7 @@ int	quit(t_errors _error_type)
 		putendl_fd("\033[31mError : pthread_join\033[0m", 2);
 	else if (_error_type == PTHREAD_DETACH)
 		putendl_fd("\033[31mError : pthread_detach\033[0m", 2);
-	else if (_error_type == PTHREAD_MUTEX_INIT)
-		putendl_fd("\033[31mError : pthread_mutex_init\033[0m", 2);
-	else if (_error_type == PTHREAD_MUTEX_DESTROY)
-		putendl_fd("\033[31mError : pthread_mutex_destroy\033[0m", 2);
-	else if (_error_type == SEM_OPEN)
-		putendl_fd("\033[31mError : sem_open\033[0m", 2);
-	else if (_error_type == SEM_POST)
-		putendl_fd("\033[31mError : sem_post\033[0m", 2);
-	else if (_error_type == SEM_WAIT)
-		putendl_fd("\033[31mError : sem_wait\033[0m", 2);
-	else if (_error_type == SEM_UNLINK)
-		putendl_fd("\033[31mError : sem_unlink\033[0m", 2);
-	else if (_error_type == SEM_CLOSE)
-		putendl_fd("\033[31mError : sem_close\033[0m", 2);
-	else if (_error_type == ERROR_FORK)
-		putendl_fd("\033[31mError : fork\033[0m", 2);
-	else if (_error_type == ERROR_WAIT)
-		putendl_fd("\033[31mError : waitpid\033[0m", 2);
 	else
-		return (-1);
+		return (quit_(_error_type));
 	return (-1);
 }
-

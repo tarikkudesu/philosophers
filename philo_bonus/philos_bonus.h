@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/15 10:03:23 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/20 11:19:18 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,19 @@
 # include <semaphore.h>
 # include <signal.h>
 
-long		get_current_time(void);
+char		*ft_strjoin(char const *s1, char const *s2);
 void		ft_usleep(t_philos *philo, long micro);
 int			fill_table(t_table *table);
-int			dinner_served(t_table *table);
-char		*ft_strjoin(char const *s1, char const *s2);
+long		get_current_time(void);
 
 int			parsing(t_table *table, char **av);
 void		putendl_fd(char *s, int fd);
+int			quit(t_errors _error_type);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 
-void		*have_dinner(void *param);
-void		monitor(t_table *table);
-int			single_philo(t_table *table);
-int			quit(t_errors _error_type);
 void		print_status(t_philos *philo, t_status status);
+int			one_philo(t_table *table);
+void		routine(t_philos *philo);
 
 #endif
-

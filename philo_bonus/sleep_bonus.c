@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:42 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/17 09:46:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/20 11:01:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ void	ft_usleep(t_philos *philo, long micro)
 		;
 	return ;
 }
-

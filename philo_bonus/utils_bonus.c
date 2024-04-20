@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:26 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/15 10:03:10 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/20 11:02:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,42 +64,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	return (fill_strs(s1, s2, &res));
 }
-
-/* bool	simu_ended(t_table *table) */
-/* { */
-/* 	return (rb_mutex(&table->table_m, &table->end_simu)); */
-/* } */
-
-/* void	wl_mutex(pthread_mutex_t *mutex, long *var, long value) */
-/* { */
-/* 	pthread_mutex_lock(mutex); */
-/* 	*var = value; */
-/* 	pthread_mutex_unlock(mutex); */
-/* } */
-
-/* void	wb_mutex(pthread_mutex_t *mutex, bool *var, bool value) */
-/* { */
-/* 	pthread_mutex_lock(mutex); */
-/* 	*var = value; */
-/* 	pthread_mutex_unlock(mutex); */
-/* } */
-
-/* long	rl_mutex(pthread_mutex_t *mutex, long *var) */
-/* { */
-/* 	long	value; */
-
-/* 	pthread_mutex_lock(mutex); */
-/* 	value = *var; */
-/* 	pthread_mutex_unlock(mutex); */
-/* 	return (value); */
-/* } */
-
-/* bool	rb_mutex(pthread_mutex_t *mutex, bool *var) */
-/* { */
-/* 	bool	value; */
-
-/* 	pthread_mutex_lock(mutex); */
-/* 	value = *var; */
-/* 	pthread_mutex_unlock(mutex); */
-/* 	return (value); */
-/* } */

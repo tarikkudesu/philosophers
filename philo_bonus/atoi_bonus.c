@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 11:04:46 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/15 10:03:10 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/20 11:20:12 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos_bonus.h"
 
-int	ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
@@ -49,7 +49,7 @@ int	ft_atoi(const char *str)
 	return ((int)(res * sign));
 }
 
-int	ft_len(int n)
+static int	ft_len(int n)
 {
 	int	l;
 
@@ -64,7 +64,7 @@ int	ft_len(int n)
 	return (l);
 }
 
-char	*ft_str(char *s, long n, int l)
+static char	*ft_str(char *s, long n, int l)
 {
 	if (n == 0)
 		*s = '0';
@@ -95,4 +95,3 @@ char	*ft_itoa(int n)
 	}
 	return (ft_str(res, nb, l - 1));
 }
-
