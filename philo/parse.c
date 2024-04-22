@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:29:36 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/14 19:42:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:15:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	parsing(t_table *table, char **av)
 	if (*(av + 4))
 	{
 		table->meals_nbr = ft_atoi(*(av + 4));
-		if (table->meals_nbr == -1 || table->meals_nbr == 0)
+		if (table->meals_nbr == 0)
 			return (quit(ERROR_FORMAT));
 	}
 	else
-		table->meals_nbr = -1;
+		table->meals_nbr = 0;
 	return (0);
 }

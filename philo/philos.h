@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/14 19:32:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:29:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ void		putendl_fd(char *s, int fd);
 int			ft_atoi(const char *str);
 
 void		*have_dinner(void *param);
-void		monitor(t_table *table);
+void		*monitor(void *param);
 int			single_philo(t_table *table);
 int			quit(t_errors _error_type);
 bool		simu_ended(t_table *table);
 void		print_status(t_philos *philo, t_status status);
-void		wl_mutex(pthread_mutex_t *mutex, long *var, long value);
-void		wb_mutex(pthread_mutex_t *mutex, bool *var, bool value);
-long		rl_mutex(pthread_mutex_t *mutex, long *var);
-bool		rb_mutex(pthread_mutex_t *mutex, bool *var);
 
 #endif

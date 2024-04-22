@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/17 09:50:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:25:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	clean_table(t_table *table)
 {
-	long	i;
+	int	i;
 
 	i = -1;
 	while (++i < table->philos_n)
@@ -33,25 +33,28 @@ static int	clean_table(t_table *table)
 
 int	dinner_served(t_table *table)
 {
-	long	i;
+	pthread_t	id;
+	int			i;
 
 	i = -1;
 	if (table->philos_n == 1)
 		return (single_philo(table));
+	table->simu_start_time = get_current_time();
 	while (++i < table->philos_n)
 	{
 		if (0 != pthread_create(&table->philos[i].thread_id, \
-			NULL, &have_dinner, &table->philos[i]))
+			NULL, &have_dinner, table->philos + i))
 			return (quit(PTHREAD_CREATE));
 	}
-	table->simu_start_time = get_current_time();
-	wb_mutex(&table->table_m, &table->ready, true);
-	monitor(table);
+	if (0 != pthread_create(&id, NULL, &monitor, table))
+		return (quit(PTHREAD_CREATE));
+	if (0 != pthread_join(id, NULL))
+		return (quit(PTHREAD_CREATE));
 	i = -1;
 	while (++i < table->philos_n)
 	{
 		if (0 != pthread_join(table->philos[i].thread_id, NULL))
-			return (quit(PTHREAD_CREATE));
+			return (quit(PTHREAD_JOIN));
 	}
 	return (0);
 }

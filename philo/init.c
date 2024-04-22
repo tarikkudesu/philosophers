@@ -6,41 +6,38 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/14 19:44:49 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:29:44 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-static void	assign_forks(t_philos *philo, int i)
-{
-	philo->left_fork = philo->table->forks + i;
-	if (i == philo->table->philos_n - 1)
-		philo->right_fork = philo->table->forks;
-	else
-		philo->right_fork = philo->table->forks + i + 1;
-}
-
 static void	init_philos(t_table *table)
 {
-	long		i;
+	int			i;
 	t_philos	*philos;
 
 	i = -1;
 	while (++i < table->philos_n)
 	{
 		philos = table->philos + i;
+		philos->t_eat = table->t_eat;
+		philos->t_sleep = table->t_sleep;
+		philos->meals_nbr = table->meals_nbr;
 		philos->table = table;
 		philos->tid = i + 1;
 		philos->meals_eaten = 0;
-		philos->full = false;
-		assign_forks(table->philos + i, i);
+		(philos + i)->left_fork = (philos + i)->table->forks + i;
+		if (i == (philos + i)->table->philos_n - 1)
+			(philos + i)->right_fork = (philos + i)->table->forks;
+		else
+			(philos + i)->right_fork = (philos + i)->table->forks + i + 1;
 	}
 }
 
 static int	init_mutex(t_table *table)
 {
-	long	i;
+	int	i;
 
 	i = -1;
 	if (0 != pthread_mutex_init(&table->print_m, NULL))
@@ -59,11 +56,7 @@ static int	init_mutex(t_table *table)
 
 int	fill_table(t_table *table)
 {
-	table->ready = false;
 	table->end_simu = false;
-	table->start_monitor = 0;
-	table->philos = NULL;
-	table->forks = NULL;
 	table->philos = malloc(sizeof(t_philos) * table->philos_n);
 	if (!table->philos)
 		return (quit(ERROR_MAL));

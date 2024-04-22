@@ -6,8 +6,7 @@ SRC			=	main.c \
 				parse.c \
 				init.c \
 				one.c \
-				track.c \
-				utils.c
+				monitor.c
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'
@@ -15,7 +14,7 @@ CC			=	cc
 NAME		=	philo
 HEADER		=	srcs/philos.h srcs/struct.h
 OBJ			=	$(SRC:.c=.o)
-CFLAGS		=	-Wall -Wextra -Werror -pthread -fsanitize=thread
+CFLAGS		=	-Wall -Wextra -Werror
 
 all: $(NAME)
 
