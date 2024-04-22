@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/20 11:19:18 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:37:44 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ char		*ft_itoa(int n);
 
 void		print_status(t_philos *philo, t_status status);
 int			one_philo(t_table *table);
-void		routine(t_philos *philo);
+int			routine(t_philos *philo);
 
 #endif

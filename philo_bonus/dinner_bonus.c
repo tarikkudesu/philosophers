@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/20 11:17:52 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:38:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	*checker(void *param)
 	while (1)
 	{
 		sem_wait(philo->philo_s);
-		if (get_current_time() - philo->last_eaten > philo->table->t_die)
+		if (get_current_time() - philo->last_eaten >= philo->table->t_die)
 		{
 			print_status(philo, DIED);
 			sem_post(philo->table->end_simu_s);
@@ -72,18 +72,20 @@ static void	*checker(void *param)
 	return (NULL);
 }
 
-void	routine(t_philos *philo)
+int	routine(t_philos *philo)
 {
 	philo->last_eaten = get_current_time();
-	pthread_create(&philo->thread_id, NULL, &checker, philo);
+	if (0 != pthread_create(&philo->thread_id, NULL, &checker, philo))
+		return (quit(PTHREAD_CREATE));
 	pthread_detach(philo->thread_id);
-	if (philo->philo_id % 2 == 0)
+	if (philo->philo_id % 2)
 		ft_usleep(philo, philo->table->t_eat);
 	while (true)
 	{
 		eat(philo);
 		print_status(philo, SLEEPING);
 		ft_usleep(philo, philo->table->t_sleep);
-		print_status(philo, SLEEPING);
+		print_status(philo, THINKING);
 	}
+	return (0);
 }
