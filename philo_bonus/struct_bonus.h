@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/20 11:01:53 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 14:59:43 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
 # include <stdbool.h>
 # include <pthread.h>
 # include <semaphore.h>
@@ -30,24 +29,24 @@ typedef enum e_errors	t_errors;
 struct s_philos
 {
 	int				philo_id;
-	pid_t			pid;
-	long			last_eaten;
+	pid_t			process_id;
+	size_t			last_eaten;
+	size_t			meals_eaten;
 	bool			dead;
-	long			meals_eaten;
+	t_table			*table;
 	sem_t			*philo_s;
 	char			*sem_name;
-	t_table			*table;
 	pthread_t		thread_id;
 };
 
 struct s_table
 {
-	long			t_die;
-	long			t_eat;
-	long			t_sleep;
-	long			philos_n;
-	long			meals_nbr;
-	long			simu_start_time;
+	size_t			t_die;
+	size_t			t_eat;
+	size_t			t_sleep;
+	int				philos_n;
+	size_t			meals_nbr;
+	size_t			simu_start_time;
 	sem_t			*end_simu_s;
 	sem_t			*full_s;
 	sem_t			*fork_s;
@@ -66,23 +65,14 @@ enum e_status
 
 enum e_errors
 {
-	ERROR_DEF,
+	ERROR,
 	SEM_OPEN,
-	SEM_POST,
-	SEM_WAIT,
-	SEM_CLOSE,
-	SEM_UNLINK,
 	ERROR_MAL,
 	ERROR_ARGS,
 	ERROR_FORK,
-	ERROR_WAIT,
 	ERROR_TIME,
 	ERROR_FORMAT,
-	PTHREAD_JOIN,
 	PTHREAD_CREATE,
-	PTHREAD_DETACH,
-	PTHREAD_MUTEX_INIT,
-	PTHREAD_MUTEX_DESTROY,
 };
 
 #endif

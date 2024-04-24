@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:16:28 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/20 11:01:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:54:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,15 @@ void	putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-static int	quit_(t_errors _error_type)
-{
-	if (_error_type == SEM_OPEN)
-		putendl_fd("\033[31mError : sem_open\033[0m", 2);
-	else if (_error_type == SEM_POST)
-		putendl_fd("\033[31mError : sem_post\033[0m", 2);
-	else if (_error_type == SEM_WAIT)
-		putendl_fd("\033[31mError : sem_wait\033[0m", 2);
-	else if (_error_type == SEM_UNLINK)
-		putendl_fd("\033[31mError : sem_unlink\033[0m", 2);
-	else if (_error_type == SEM_CLOSE)
-		putendl_fd("\033[31mError : sem_close\033[0m", 2);
-	else if (_error_type == ERROR_FORK)
-		putendl_fd("\033[31mError : fork\033[0m", 2);
-	else if (_error_type == ERROR_WAIT)
-		putendl_fd("\033[31mError : waitpid\033[0m", 2);
-	else
-		return (-1);
-	return (-1);
-}
-
 int	quit(t_errors _error_type)
 {
-	if (_error_type == ERROR_DEF)
-		putendl_fd("Error", 2);
-	else if (_error_type == ERROR_MAL)
+	_error(_error_type);
+	exit(1);
+}
+
+int	_error(t_errors _error_type)
+{
+	if (_error_type == ERROR_MAL)
 		putendl_fd("Error : malloc", 2);
 	else if (_error_type == ERROR_ARGS)
 		putendl_fd("\033[31mError : wrong number of arguments\033[0m", 2);
@@ -56,11 +39,9 @@ int	quit(t_errors _error_type)
 		putendl_fd("\033[31mError : argument format\033[0m", 2);
 	else if (_error_type == PTHREAD_CREATE)
 		putendl_fd("\033[31mError : pthread_create\033[0m", 2);
-	else if (_error_type == PTHREAD_JOIN)
-		putendl_fd("\033[31mError : pthread_join\033[0m", 2);
-	else if (_error_type == PTHREAD_DETACH)
-		putendl_fd("\033[31mError : pthread_detach\033[0m", 2);
-	else
-		return (quit_(_error_type));
+	else if (_error_type == SEM_OPEN)
+		putendl_fd("\033[31mError : sem_open\033[0m", 2);
+	else if (_error_type == ERROR_FORK)
+		putendl_fd("\033[31mError : fork\033[0m", 2);
 	return (-1);
 }

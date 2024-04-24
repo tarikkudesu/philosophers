@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:16:28 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/14 19:23:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-int	quit(t_errors _error_type)
+int	_error(t_errors _error_type)
 {
 	if (_error_type == ERR_DEF)
 		putendl_fd("Error", 2);

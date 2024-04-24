@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 15:29:13 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			ft_atoi(const char *str);
 void		*have_dinner(void *param);
 void		*monitor(void *param);
 int			single_philo(t_table *table);
-int			quit(t_errors _error_type);
+int			_error(t_errors _error_type);
 bool		simu_ended(t_table *table);
 void		print_status(t_philos *philo, t_status status);
 

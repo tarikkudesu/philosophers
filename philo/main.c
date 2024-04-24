@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 15:25:32 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static int	clean_table(t_table *table)
 	while (++i < table->philos_n)
 	{
 		if (0 != pthread_mutex_destroy(&table->forks[i].fork_m))
-			return (quit(PTHREAD_MUTEX_DESTROY));
+			return (_error(PTHREAD_MUTEX_DESTROY));
 		if (0 != pthread_mutex_destroy(&table->philos[i].philo_m))
-			return (quit(PTHREAD_MUTEX_DESTROY));
+			return (_error(PTHREAD_MUTEX_DESTROY));
 	}
 	if (0 != pthread_mutex_destroy(&table->print_m))
-		return (quit(PTHREAD_MUTEX_DESTROY));
+		return (_error(PTHREAD_MUTEX_DESTROY));
 	if (0 != pthread_mutex_destroy(&table->table_m))
-		return (quit(PTHREAD_MUTEX_DESTROY));
+		return (_error(PTHREAD_MUTEX_DESTROY));
 	return (0);
 }
 
@@ -44,17 +44,17 @@ int	dinner_served(t_table *table)
 	{
 		if (0 != pthread_create(&table->philos[i].thread_id, \
 			NULL, &have_dinner, table->philos + i))
-			return (quit(PTHREAD_CREATE));
+			return (_error(PTHREAD_CREATE));
 	}
 	if (0 != pthread_create(&id, NULL, &monitor, table))
-		return (quit(PTHREAD_CREATE));
+		return (_error(PTHREAD_CREATE));
 	if (0 != pthread_join(id, NULL))
-		return (quit(PTHREAD_CREATE));
+		return (_error(PTHREAD_CREATE));
 	i = -1;
 	while (++i < table->philos_n)
 	{
 		if (0 != pthread_join(table->philos[i].thread_id, NULL))
-			return (quit(PTHREAD_JOIN));
+			return (_error(PTHREAD_JOIN));
 	}
 	return (0);
 }
@@ -64,7 +64,7 @@ int	main(int ac, char **av)
 	t_table	table;
 
 	if (ac != 5 && ac != 6)
-		return (quit(ERROR_ARGS));
+		return (_error(ERROR_ARGS));
 	if (-1 == parsing(&table, av + 1))
 		return (1);
 	if (-1 == fill_table(&table))

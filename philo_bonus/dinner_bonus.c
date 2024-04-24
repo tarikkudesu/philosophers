@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 15:38:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 14:52:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,60 @@
 
 void	print_status(t_philos *philo, t_status status)
 {
-	long	time;
+	size_t	time;
 
 	time = get_current_time() - philo->table->simu_start_time;
 	sem_wait(philo->table->print_s);
 	if (status == DIED)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "died");
+		printf("%zu\t%d\tdied\n", time, philo->philo_id);
 	else if (status == FORK)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "has taken a fork");
-	else if (status == FORK)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "has taken a fork");
+		printf("%zu\t%d\thas taken a fork\n", time, philo->philo_id);
 	else if (status == EATING)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "is eating");
+		printf("%zu\t%d\tis eating\n", time, philo->philo_id);
 	else if (status == SLEEPING)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "is sleeping");
+		printf("%zu\t%d\tis sleeping\n", time, philo->philo_id);
 	else if (status == THINKING)
-		printf("%ld\t%d\t%s\n", time, philo->philo_id, "is thinking");
+		printf("%zu\t%d\tis thinking\n", time, philo->philo_id);
 	if (status != DIED)
 		sem_post(philo->table->print_s);
 }
 
 static void	eat(t_philos *philo)
 {
-	sem_wait(philo->philo_s);
 	sem_wait(philo->table->fork_s);
 	print_status(philo, FORK);
 	sem_wait(philo->table->fork_s);
 	print_status(philo, FORK);
 	print_status(philo, EATING);
+	sem_wait(philo->philo_s);
 	philo->last_eaten = get_current_time();
 	philo->meals_eaten++;
-	if (philo->table->meals_nbr > 0 \
+	if (philo->table->meals_nbr != 0 \
 		&& philo->meals_eaten == philo->table->meals_nbr)
 		sem_post(philo->table->full_s);
+	sem_post(philo->philo_s);
 	ft_usleep(philo, philo->table->t_eat);
 	sem_post(philo->table->fork_s);
 	sem_post(philo->table->fork_s);
-	sem_post(philo->philo_s);
 }
 
 static void	*checker(void *param)
 {
 	t_philos	*philo;
+	size_t		time;
 
 	philo = (t_philos *)param;
-	while (1)
+	while (true)
 	{
 		sem_wait(philo->philo_s);
-		if (get_current_time() - philo->last_eaten >= philo->table->t_die)
+		time = get_current_time() - philo->last_eaten;
+		sem_post(philo->philo_s);
+		if (time > philo->table->t_die)
 		{
 			print_status(philo, DIED);
 			sem_post(philo->table->end_simu_s);
 			break ;
 		}
-		sem_post(philo->philo_s);
 	}
 	return (NULL);
 }
@@ -80,7 +80,7 @@ int	routine(t_philos *philo)
 	pthread_detach(philo->thread_id);
 	if (philo->philo_id % 2)
 		ft_usleep(philo, philo->table->t_eat);
-	while (true)
+	while (1)
 	{
 		eat(philo);
 		print_status(philo, SLEEPING);

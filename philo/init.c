@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 15:29:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static int	init_mutex(t_table *table)
 
 	i = -1;
 	if (0 != pthread_mutex_init(&table->print_m, NULL))
-		return (quit(PTHREAD_MUTEX_INIT));
+		return (_error(PTHREAD_MUTEX_INIT));
 	if (0 != pthread_mutex_init(&table->table_m, NULL))
-		return (quit(PTHREAD_MUTEX_INIT));
+		return (_error(PTHREAD_MUTEX_INIT));
 	while (++i < table->philos_n)
 	{
 		if (0 != pthread_mutex_init(&table->philos[i].philo_m, NULL))
-			return (quit(PTHREAD_MUTEX_INIT));
+			return (_error(PTHREAD_MUTEX_INIT));
 		if (0 != pthread_mutex_init(&table->forks[i].fork_m, NULL))
-			return (quit(PTHREAD_MUTEX_INIT));
+			return (_error(PTHREAD_MUTEX_INIT));
 	}
 	return (0);
 }
@@ -59,10 +59,10 @@ int	fill_table(t_table *table)
 	table->end_simu = false;
 	table->philos = malloc(sizeof(t_philos) * table->philos_n);
 	if (!table->philos)
-		return (quit(ERROR_MAL));
+		return (_error(ERROR_MAL));
 	table->forks = malloc(sizeof(t_fork) * table->philos_n);
 	if (!table->philos)
-		return (free(table->philos), quit(ERROR_MAL));
+		return (free(table->philos), _error(ERROR_MAL));
 	if (-1 == init_mutex(table))
 		return (-1);
 	init_philos(table);
