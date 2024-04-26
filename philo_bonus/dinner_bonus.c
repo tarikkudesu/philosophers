@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 14:52:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/26 11:10:46 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ void	print_status(t_philos *philo, t_status status)
 		sem_post(philo->table->print_s);
 }
 
+bool	check_death(t_philos *philo)
+{
+	if (get_current_time() - philo->table->last_eaten > philo->table->t_die)
+	{
+		print_status(philo, DIED);
+		sem_post(philo->table->end_simu_s);
+		return (true);
+	}
+	return (false);
+}
+
 static void	eat(t_philos *philo)
 {
 	sem_wait(philo->table->fork_s);
@@ -39,52 +50,29 @@ static void	eat(t_philos *philo)
 	sem_wait(philo->table->fork_s);
 	print_status(philo, FORK);
 	print_status(philo, EATING);
-	sem_wait(philo->philo_s);
-	philo->last_eaten = get_current_time();
-	philo->meals_eaten++;
+	philo->table->last_eaten = get_current_time();
+	philo->table->meals_eaten++;
 	if (philo->table->meals_nbr != 0 \
-		&& philo->meals_eaten == philo->table->meals_nbr)
+		&& philo->table->meals_eaten == philo->table->meals_nbr)
 		sem_post(philo->table->full_s);
-	sem_post(philo->philo_s);
 	ft_usleep(philo, philo->table->t_eat);
 	sem_post(philo->table->fork_s);
 	sem_post(philo->table->fork_s);
 }
 
-static void	*checker(void *param)
-{
-	t_philos	*philo;
-	size_t		time;
-
-	philo = (t_philos *)param;
-	while (true)
-	{
-		sem_wait(philo->philo_s);
-		time = get_current_time() - philo->last_eaten;
-		sem_post(philo->philo_s);
-		if (time > philo->table->t_die)
-		{
-			print_status(philo, DIED);
-			sem_post(philo->table->end_simu_s);
-			break ;
-		}
-	}
-	return (NULL);
-}
-
 int	routine(t_philos *philo)
 {
-	philo->last_eaten = get_current_time();
-	if (0 != pthread_create(&philo->thread_id, NULL, &checker, philo))
-		return (quit(PTHREAD_CREATE));
-	pthread_detach(philo->thread_id);
+	t_table	*table;
+
+	table = philo->table;
+	table->last_eaten = get_current_time();
 	if (philo->philo_id % 2)
-		ft_usleep(philo, philo->table->t_eat);
+		ft_usleep(philo, table->t_eat);
 	while (1)
 	{
 		eat(philo);
 		print_status(philo, SLEEPING);
-		ft_usleep(philo, philo->table->t_sleep);
+		ft_usleep(philo, table->t_sleep);
 		print_status(philo, THINKING);
 	}
 	return (0);

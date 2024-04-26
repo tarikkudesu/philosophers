@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 15:03:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/26 11:47:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 static void	clean_table(t_table *table)
 {
-	int	i;
-
-	i = -1;
-	while (++i < table->philos_n)
-	{
-		sem_close((table->philos + i)->philo_s);
-		sem_unlink((table->philos + i)->sem_name);
-		free((table->philos + i)->sem_name);
-	}
 	sem_close(table->print_s);
 	sem_unlink("/print_s");
 	sem_close(table->fork_s);
@@ -53,7 +44,10 @@ static void	kill_them(t_table *table, int pnumber)
 
 	i = -1;
 	while (++i < pnumber)
+	{
+		sem_post(table->full_s);
 		kill((table->philos + i)->process_id, SIGKILL);
+	}
 }
 
 static int	dinner_served(t_table *table)

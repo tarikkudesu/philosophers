@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 14:59:43 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/26 11:07:22 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,7 @@ struct s_philos
 {
 	int				philo_id;
 	pid_t			process_id;
-	size_t			last_eaten;
-	size_t			meals_eaten;
-	bool			dead;
 	t_table			*table;
-	sem_t			*philo_s;
-	char			*sem_name;
-	pthread_t		thread_id;
 };
 
 struct s_table
@@ -46,6 +40,8 @@ struct s_table
 	size_t			t_sleep;
 	int				philos_n;
 	size_t			meals_nbr;
+	size_t			last_eaten;
+	size_t			meals_eaten;
 	size_t			simu_start_time;
 	sem_t			*end_simu_s;
 	sem_t			*full_s;
