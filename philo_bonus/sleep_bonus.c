@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:42 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/26 11:00:25 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:15:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_usleep(t_philos *philo, size_t milliseconds)
 
 	(void)philo;
 	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds && !check_death(philo))
+	while ((get_current_time() - start) < milliseconds)
 		;
 	return ;
 }

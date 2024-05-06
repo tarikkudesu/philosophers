@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/26 11:07:22 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:22:52 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 # include <stdbool.h>
 # include <pthread.h>
+# include <sys/time.h>
 # include <semaphore.h>
 
 typedef struct s_philos	t_philos;
@@ -30,6 +32,8 @@ struct s_philos
 {
 	int				philo_id;
 	pid_t			process_id;
+	char			*sem_name;
+	sem_t			*philo_s;
 	t_table			*table;
 };
 

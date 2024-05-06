@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/06 10:17:04 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:29:44 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,27 @@ void	print_status(t_philos *philo, t_status status)
 		sem_post(philo->table->print_s);
 }
 
-bool	check_death(t_philos *philo)
+void	*checker(void *param)
 {
-	if (get_current_time() - philo->table->last_eaten > philo->table->t_die)
+	t_philos	*philo;
+	t_table		*table;
+	size_t		last_eaten;
+
+	philo = (t_philos *)param;
+	table = philo->table;
+	while (1)
 	{
-		print_status(philo, DIED);
-		sem_post(philo->table->end_simu_s);
-		return (true);
+		sem_wait(philo->philo_s);
+		last_eaten = table->last_eaten;
+		sem_post(philo->philo_s);
+		if (get_current_time() - last_eaten > table->t_die)
+		{
+			print_status(philo, DIED);
+			sem_post(table->end_simu_s);
+			break ;
+		}
 	}
-	return (false);
+	return (NULL);
 }
 
 static void	eat(t_philos *philo)
@@ -50,11 +62,12 @@ static void	eat(t_philos *philo)
 	sem_wait(philo->table->fork_s);
 	print_status(philo, FORK);
 	print_status(philo, EATING);
+	sem_wait(philo->philo_s);
 	philo->table->last_eaten = get_current_time();
 	philo->table->meals_eaten++;
-	if (philo->table->meals_nbr != 0 \
-		&& philo->table->meals_eaten == philo->table->meals_nbr)
+	if (philo->table->meals_eaten == philo->table->meals_nbr)
 		sem_post(philo->table->full_s);
+	sem_post(philo->philo_s);
 	ft_usleep(philo, philo->table->t_eat);
 	sem_post(philo->table->fork_s);
 	sem_post(philo->table->fork_s);
@@ -62,10 +75,14 @@ static void	eat(t_philos *philo)
 
 int	routine(t_philos *philo)
 {
-	t_table	*table;
+	t_table		*table;
+	pthread_t	tid;
 
 	table = philo->table;
 	table->last_eaten = get_current_time();
+	if (0 != pthread_create(&tid, NULL, &checker, philo))
+		return (quit(ERROR));
+	pthread_detach(tid);
 	while (1)
 	{
 		eat(philo);
