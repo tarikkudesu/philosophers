@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/26 11:10:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:17:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ int	routine(t_philos *philo)
 
 	table = philo->table;
 	table->last_eaten = get_current_time();
-	if (philo->philo_id % 2)
-		ft_usleep(philo, table->t_eat);
 	while (1)
 	{
 		eat(philo);
