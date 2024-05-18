@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:22:25 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static void	init_philos(t_table *table)
 	while (++i < table->philos_n)
 	{
 		philos = table->philos + i;
+		philos->tid = i + 1;
+		philos->table = table;
+		philos->meals_eaten = 0;
 		philos->t_eat = table->t_eat;
 		philos->t_sleep = table->t_sleep;
 		philos->meals_nbr = table->meals_nbr;
-		philos->table = table;
-		philos->tid = i + 1;
-		philos->meals_eaten = 0;
-		(philos + i)->left_fork = (philos + i)->table->forks + i;
-		if (i == (philos + i)->table->philos_n - 1)
-			(philos + i)->right_fork = (philos + i)->table->forks;
+		philos->left_fork = table->forks + i;
+		if (i == table->philos_n - 1)
+			philos->right_fork = table->forks;
 		else
-			(philos + i)->right_fork = (philos + i)->table->forks + i + 1;
+			philos->right_fork = table->forks + i + 1;
 	}
 }
 
@@ -56,12 +56,13 @@ static int	init_mutex(t_table *table)
 
 int	fill_table(t_table *table)
 {
+	table->full = 0;
 	table->end_simu = false;
 	table->philos = malloc(sizeof(t_philos) * table->philos_n);
 	if (!table->philos)
 		return (_error(ERROR_MAL));
 	table->forks = malloc(sizeof(t_fork) * table->philos_n);
-	if (!table->philos)
+	if (!table->forks)
 		return (free(table->philos), _error(ERROR_MAL));
 	if (-1 == init_mutex(table))
 		return (-1);

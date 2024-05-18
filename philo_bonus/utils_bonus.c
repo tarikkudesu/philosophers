@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:26 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/20 11:02:05 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:31:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos_bonus.h"
 
-size_t	ft_strlen(const char *str)
+static long	ft_strlen(const char *str)
 {
 	int	i;
 

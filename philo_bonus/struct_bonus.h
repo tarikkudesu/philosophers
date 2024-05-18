@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/06 10:22:52 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:33:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ struct s_philos
 
 struct s_table
 {
-	size_t			t_die;
-	size_t			t_eat;
-	size_t			t_sleep;
+	long			t_die;
+	long			t_eat;
+	long			t_sleep;
 	int				philos_n;
-	size_t			meals_nbr;
-	size_t			last_eaten;
-	size_t			meals_eaten;
-	size_t			simu_start_time;
+	long			meals_nbr;
+	long			last_eaten;
+	long			meals_eaten;
+	long			simu_start_time;
 	sem_t			*end_simu_s;
 	sem_t			*full_s;
 	sem_t			*fork_s;
@@ -70,7 +70,6 @@ enum e_errors
 	ERROR_MAL,
 	ERROR_ARGS,
 	ERROR_FORK,
-	ERROR_TIME,
 	ERROR_FORMAT,
 	PTHREAD_CREATE,
 };

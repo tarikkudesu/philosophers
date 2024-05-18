@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 15:28:22 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:58:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ void	*have_dinner(void *param)
 		if (philo->meals_eaten == philo->meals_nbr)
 		{
 			pthread_mutex_lock(&philo->table->table_m);
-			philo->table->end_simu = true;
+			philo->table->full++;
 			pthread_mutex_unlock(&philo->table->table_m);
-			break ;
 		}
 		eating(philo);
 		print_status(philo, SLEEPING);

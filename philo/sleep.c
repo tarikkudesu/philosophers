@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:51:42 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/22 14:34:43 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:03:21 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	ft_usleep(t_philos *philo, long micro)
 	long	start;
 
 	start = get_current_time();
-	(void)philo;
-	while ((get_current_time() - start) < micro)
-		usleep(500);
+	while ((get_current_time() - start) < micro && !simu_ended(philo->table))
+		;
 	return ;
 }

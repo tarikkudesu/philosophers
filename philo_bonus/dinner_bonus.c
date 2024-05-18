@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/06 10:29:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:28:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_status(t_philos *philo, t_status status)
 {
-	size_t	time;
+	long	time;
 
 	time = get_current_time() - philo->table->simu_start_time;
 	sem_wait(philo->table->print_s);
@@ -36,7 +36,7 @@ void	*checker(void *param)
 {
 	t_philos	*philo;
 	t_table		*table;
-	size_t		last_eaten;
+	long		last_eaten;
 
 	philo = (t_philos *)param;
 	table = philo->table;
@@ -68,7 +68,7 @@ static void	eat(t_philos *philo)
 	if (philo->table->meals_eaten == philo->table->meals_nbr)
 		sem_post(philo->table->full_s);
 	sem_post(philo->philo_s);
-	ft_usleep(philo, philo->table->t_eat);
+	ft_usleep(philo->table->t_eat);
 	sem_post(philo->table->fork_s);
 	sem_post(philo->table->fork_s);
 }
@@ -87,7 +87,7 @@ int	routine(t_philos *philo)
 	{
 		eat(philo);
 		print_status(philo, SLEEPING);
-		ft_usleep(philo, table->t_sleep);
+		ft_usleep(table->t_sleep);
 		print_status(philo, THINKING);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/06 10:22:07 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:27:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "struct_bonus.h"
 
 char		*ft_strjoin(char const *s1, char const *s2);
-void		ft_usleep(t_philos *philo, size_t milliseconds);
+void		ft_usleep(long milliseconds);
 int			fill_table(t_table *table);
-size_t		get_current_time(void);
+long		get_current_time(void);
 
 int			parsing(t_table *table, char **av);
 int			_error(t_errors _error_type);

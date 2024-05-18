@@ -6,20 +6,21 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 10:53:23 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:22:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOS_H
 # define PHILOS_H
 
-# include "struct.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdbool.h>
+# include "struct.h"
 
 long		get_current_time(void);
 void		ft_usleep(t_philos *philo, long micro);

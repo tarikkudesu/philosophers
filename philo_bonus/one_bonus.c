@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 13:42:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/24 15:03:26 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:27:47 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	one_philo_routine(t_table *table)
 {
 	print_status(table->philos, FORK);
-	ft_usleep(table->philos, table->t_die);
+	ft_usleep(table->t_die);
 	print_status(table->philos, DIED);
 	exit(0);
 }
