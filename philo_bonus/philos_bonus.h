@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:58:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/18 14:27:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:55:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 
 void		print_status(t_philos *philo, t_status status);
-bool		check_death(t_philos *philo);
 int			one_philo(t_table *table);
 int			routine(t_philos *philo);
 

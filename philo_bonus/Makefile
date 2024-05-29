@@ -5,8 +5,7 @@ SRC			=	main_bonus.c \
 				sleep_bonus.c \
 				parse_bonus.c \
 				init_bonus.c \
-				one_bonus.c \
-				utils_bonus.c
+				one_bonus.c
 
 GREEN		=	'\033[32m'
 NONE		=	'\033[0m'

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:01:55 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/18 14:33:13 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/29 10:16:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ struct s_philos
 {
 	int				philo_id;
 	pid_t			process_id;
-	char			*sem_name;
-	sem_t			*philo_s;
 	t_table			*table;
 };
 

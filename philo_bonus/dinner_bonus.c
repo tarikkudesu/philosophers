@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:19:00 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/18 14:28:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/29 10:13:34 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,12 @@ void	*checker(void *param)
 {
 	t_philos	*philo;
 	t_table		*table;
-	long		last_eaten;
 
 	philo = (t_philos *)param;
 	table = philo->table;
 	while (1)
 	{
-		sem_wait(philo->philo_s);
-		last_eaten = table->last_eaten;
-		sem_post(philo->philo_s);
-		if (get_current_time() - last_eaten > table->t_die)
+		if (get_current_time() - table->last_eaten > table->t_die)
 		{
 			print_status(philo, DIED);
 			sem_post(table->end_simu_s);
@@ -62,12 +58,10 @@ static void	eat(t_philos *philo)
 	sem_wait(philo->table->fork_s);
 	print_status(philo, FORK);
 	print_status(philo, EATING);
-	sem_wait(philo->philo_s);
 	philo->table->last_eaten = get_current_time();
 	philo->table->meals_eaten++;
 	if (philo->table->meals_eaten == philo->table->meals_nbr)
 		sem_post(philo->table->full_s);
-	sem_post(philo->philo_s);
 	ft_usleep(philo->table->t_eat);
 	sem_post(philo->table->fork_s);
 	sem_post(philo->table->fork_s);

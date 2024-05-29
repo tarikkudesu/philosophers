@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:58:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/05/06 10:29:32 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/05/29 10:14:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	init_semaphores(t_table *table)
 static int	init_philos(t_table *table)
 {
 	t_philos	*philo;
-	char		*tmp;
 	int			i;
 
 	i = -1;
@@ -45,17 +44,6 @@ static int	init_philos(t_table *table)
 		philo = table->philos + i;
 		philo->table = table;
 		philo->philo_id = i + 1;
-		tmp = ft_itoa(i * 10000);
-		if (!tmp)
-			return (quit(ERROR_MAL));
-		philo->sem_name = ft_strjoin("/sem", tmp);
-		free(tmp);
-		if (!philo->sem_name)
-			return (quit(ERROR_MAL));
-		sem_unlink(philo->sem_name);
-		philo->philo_s = sem_open(philo->sem_name, O_CREAT, 0644, 1);
-		if (philo->philo_s == SEM_FAILED)
-			return (quit(SEM_OPEN));
 	}
 	return (0);
 }
@@ -67,8 +55,8 @@ int	fill_table(t_table *table)
 	if (!table->philos)
 		return (_error(ERROR_MAL));
 	if (-1 == init_philos(table))
-		return (_error(-1));
+		return (free(table->philos), _error(-1));
 	if (-1 == init_semaphores(table))
-		return (_error(-1));
+		return (free(table->philos), _error(-1));
 	return (0);
 }
