@@ -67,8 +67,7 @@ int	main(int ac, char **av)
 		return (_error(ERROR_ARGS));
 	if (-1 == parsing(&table, av + 1))
 		return (1);
-	if (-1 == fill_table(&table))
-		return (1);
-	dinner_served(&table);
+	if (0 == fill_table(&table))
+		dinner_served(&table);
 	clean_table(&table);
 }
